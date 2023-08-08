@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/jpg" href="./public/favicon.jpg">
+    <link rel="stylesheet" href="./css/add_user_workout.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>MyWorkouts</title>
+</head>
+<body>
+<main>
+    <div class="header__wrapper">
+        <div class="header">
+            <div class="title">
+                <h1 class="title">Выбор упражнений</h1>
+            </div>
+            <div class="tittleSumEx">
+                <p> {{ count_ex }} Упражнения </p>
+            </div>
+        </div>
+    </div>
+    <div class="mainContent__wrapper">
+        <div class="mainContent">
+            <hr size="1px">
+            <div class="exercises__wrapper">
+                {% for ex in exercises %}
+                    <div id="ex_number_{{ex.id}}" class="exercise">
+                        <div class="video_img_content">
+                            {% if "None" in ex.image_exercise_url  %}
+                                <img src={{ex.image_exercise_url}}></img>
+                            {% else %}
+                                <video src={{ex.image_exercise_url + "#t=0.1"}} type="video/mp4"></video>
+                            {% endif %}
+                        </div>
+                        <div class="exerciseInfo">
+                            <div class="exerciseDetails">
+                                <div class="exerciseDetailsLeftBlock">
+                                    <div class="exerciseTitle">
+                                        {{ex.ex_name}}
+                                    </div>
+                                    <div class="exerciseDesc">
+                                        {{ ex.description }}
+                                    </div>
+                                </div>
+                                <div class="exerciseDetailsRightBlock">
+                                    {{ ex.type_exercise.type_name }}
+                                </div>
+                            </div>
+                            <div class="exerciseOptions">
+                                <div class="exerciseInvInfo">
+                                    <!-- {{ ex.inventories.inv_name }} -->
+                                </div>
+                                <div id="ex_number_wrapper__{{ex.id}}" class="buttons__wrapper">
+                                    <button id="ex_number_button__{{ex.id}}" class="buttonAdd" onclick="addExercise(this.id, 'plus')();">
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="check__wrapper">
+                <div class="check">
+                    Упражнения еще не выбраны
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer__wrapper">
+        <div class="footer">
+        </div>
+    </div>
+</main>
+</body>
+
+<script>
+    function addExercise(clicked_id, action="delete"){
+        return () => {
+            let key_id = Number(clicked_id.split("__")[1]) // получаем id упражнения
+
+            let buttonWrapper = document.getElementById("ex_number_wrapper__" + key_id)
+
+            // В зависимости от условия нажатия делаем меняем
+            if (window.ex_list.has(key_id)){
+                let valueRepeat = document.getElementById("ex_count_number__" + key_id)
+                if (action == 'plus' && window.ex_list.get(key_id) > 9) {
+                    console.log("Подходов слишком много, не переусердствуй")
+                    alert("Подходов слишком много, не переусердствуй")
+                } else if  (action == 'plus'){
+                    window.ex_list.set(key_id, window.ex_list.get(key_id) + 1)
+                    valueRepeat.innerText = Number(valueRepeat.innerText) + 1
+                } else if (action == 'minus'){
+                    window.ex_list.set(key_id, window.ex_list.get(key_id) - 1)
+                    if (window.ex_list.get(key_id) == 0) {
+                        createAddButton(buttonWrapper)
+                        window.ex_list.delete(key_id)
+                    }
+                    valueRepeat.innerText = Number(valueRepeat.innerText) - 1
+                } else {
+                    createAddButton(buttonWrapper)
+                    window.ex_list.delete(key_id)
+                }
+            } else {
+                if (action == 'plus') {
+                    window.ex_list.set(key_id, 1);
+                    createManyButtons(buttonWrapper, key_id)
+                } else {
+                    console.log("Удалять уже нечего)")
+                    alert("Удалять уже нечего)")
+                }
+            }
+        }
+    }
+
+    function createAddButton(buttonWrapper){
+         // Удаление прошлых элементов.
+         while (buttonWrapper.firstChild) {
+                buttonWrapper.removeChild(buttonWrapper.firstChild);
+        }
+        // Create a button element
+        const buttonAdd = document.createElement('button')
+        buttonAdd.id = "ex_number_button__" + buttonWrapper.id.split("__")[1]
+        buttonAdd.className = "buttonAdd";
+        buttonAdd.innerText = "Добавить";
+        buttonAdd.addEventListener('click', addExercise(buttonAdd.id, "plus"));
+        buttonWrapper.appendChild(buttonAdd);
+    }
+
+    function createManyButtons(buttonWrapper){
+        // Удаление прошлых элементов.
+        while (buttonWrapper.firstChild) {
+                buttonWrapper.removeChild(buttonWrapper.firstChild);
+        }
+        // Create a button element
+        const buttonDelete = document.createElement('button')
+        buttonDelete.id = "ex_delete_button__" + buttonWrapper.id.split("__")[1]
+        buttonDelete.className = "buttonDelete";
+
+        const trashBasket = document.createElement("div");
+        trashBasket.className = "trashBasket"
+        trashBasket.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 791.908 791.908" style="enable-background:new 0 0 791.908 791.908" xml:space="preserve"><path d="M648.587 99.881H509.156C500.276 43.486 452.761 0 394.444 0S287.696 43.486 279.731 99.881H142.315c-26.733 0-48.43 21.789-48.43 48.43v49.437c0 24.719 17.761 44.493 41.564 47.423V727.64c0 35.613 28.655 64.268 64.268 64.268h392.475c35.613 0 64.268-28.655 64.268-64.268V246.087c23.711-3.937 41.564-23.711 41.564-47.423v-49.437c-1.007-27.557-22.796-49.346-49.437-49.346zM394.444 36.62c38.543 0 70.219 26.733 77.085 63.261H316.351c7.874-35.613 39.55-63.261 78.093-63.261zm224.48 692.119c0 14.831-11.901 27.648-27.648 27.648H198.71c-14.831 0-27.648-11.901-27.648-27.648V247.185H618.01v481.554h.914zm41.473-530.991c0 6.958-4.944 11.902-11.902 11.902H142.223c-6.958 0-11.902-4.944-11.902-11.902v-49.437c0-6.958 4.944-11.902 11.902-11.902h505.265c6.958 0 11.901 4.944 11.901 11.902v49.437h1.008zM253.09 661.45V349.081c0-9.887 7.873-17.761 17.761-17.761s17.761 7.873 17.761 17.761V661.45c0 9.887-7.873 17.761-17.761 17.761-9.887 1.098-17.761-7.874-17.761-17.761zm125.516 0V349.081c0-9.887 7.873-17.761 17.761-17.761 9.887 0 17.761 7.873 17.761 17.761V661.45c0 9.887-7.873 17.761-17.761 17.761-9.797 1.098-17.761-7.874-17.761-17.761zm125.606 0V349.081c0-9.887 7.873-17.761 17.761-17.761s17.761 7.873 17.761 17.761V661.45c0 9.887-7.873 17.761-17.761 17.761-8.88 1.098-17.761-7.874-17.761-17.761z"/></svg>'
+
+        // var svg = trashBasket.contentDocument;
+        // var obj = svg.getElementById("Capa_1");
+        // alert(window.location.origin + "/public/icons/biggarbagebin_121980.svg")
+        buttonDelete.appendChild(trashBasket);
+        
+        buttonDelete.addEventListener('click', addExercise(buttonDelete.id));
+        buttonWrapper.appendChild(buttonDelete);
+
+        const buttonMinus = document.createElement('button')
+        buttonMinus.id = "ex_minus_button__" + buttonWrapper.id.split("__")[1]
+        buttonMinus.className = "buttonMini";
+        buttonMinus.innerText = "-";
+        buttonMinus.addEventListener('click', addExercise(buttonMinus.id, 'minus'));
+        buttonWrapper.appendChild(buttonMinus);
+
+        const valueRepeat = document.createElement('div')
+        valueRepeat.id = "ex_count_number__" + buttonWrapper.id.split("__")[1]
+        valueRepeat.className = "buttonNumber";
+        valueRepeat.innerText = "1";
+        buttonWrapper.appendChild(valueRepeat);
+
+        const buttonPlus = buttonMinus.cloneNode(true);
+        buttonPlus.id = "ex_plus_button__" + buttonWrapper.id.split("__")[1]
+        buttonPlus.innerText = "+";
+        buttonPlus.addEventListener('click', addExercise(buttonPlus.id, "plus"));
+        buttonWrapper.appendChild(buttonPlus);
+    }
+
+    function mainButtonListener(){
+        // Telegram.WebApp.sendData(JSON.stringify(Object.fromEntries(window.ex_list)));
+        
+        Telegram.WebApp.sendData(JSON.stringify([...window.ex_list]));
+        Telegram.WebApp.close();
+    }
+</script>
+
+<script type="text/javascript">
+    // Меняем тему под телеграмм
+
+    window.ex_list = new Map()
+    Telegram.WebApp.MainButton.setText('Сохранить').show().onClick(mainButtonListener);
+    Telegram.WebApp.MainButton.setParams({"color": "#1A83B0"});
+    Telegram.WebApp.expand();
+</script>
+
+</html>

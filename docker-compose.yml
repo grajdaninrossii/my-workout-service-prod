@@ -1,0 +1,57 @@
+version: "3.3"
+
+services:
+  web:
+    build: .
+    container_name: workout_bot
+    command: bash -c "alembic upgrade head && python /my_workouts_bot/fill_bd_start_val.py && python /my_workouts_bot/app.py"
+    external_links:
+      - db-pg:db-pg
+    volumes:
+      - ./my_workouts_bot:/my_workouts_bot
+    # command: python app/app.py
+    ports:
+      - "8000:8000"
+    deploy:
+      resources:
+          limits:
+            cpus: "0.5"
+            memory: 512M
+  database:
+    image: "postgres"
+    container_name: db-pg
+    env_file:
+      - my_workouts_bot/.env
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+          limits:
+            cpus: "0.5"
+            memory: 512M
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    env_file:
+      - my_workouts_bot/.env
+    ports:
+      - 5050:80
+
+  # ngrok:
+  #   image: wernight/ngrok:latest
+  #   entrypoint: ngrok http api:8000
+  #   ports:
+  #     - 4040:4040
+
+  # ngrok
+  # ngrok:
+  #   image: wernight/ngrok:latest
+  #   environment:
+  #     # NGROK_AUTHTOKEN: 2PT6m77hUwPZo1jIW6o0xvuuynH_4MbNsPoJz2rkBkKYoSit7
+  #     NGROK_LOOK_DOMAIN: localhost
+  #     NGROK_PROTOCOL: http
+  #     NGROK_PORT: 8000
+  #     NGROK_REMOTE_ADDR: 127.0.0.1:8000
+
+  #   ports:
+  #     - "4040:4040"

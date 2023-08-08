@@ -1,0 +1,10 @@
+
+my-workouts-service/.env
+my_workouts_bot/.env
+*\__pycache__
+*.gif
+my_workouts_bot/myworkoutbot
+my_workouts_bot/poetry.lock
+my_workouts_bot/.VSCodeCounter/*
+my_workouts_bot/.vscode/*
+*.csv

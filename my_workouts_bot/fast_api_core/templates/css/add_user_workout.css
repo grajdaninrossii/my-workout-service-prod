@@ -1,0 +1,252 @@
+* {
+	padding: 0;
+	margin: 0;
+    font-family: "Roboto";
+}
+
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--tg-theme-text-color);
+	background: var(--tg-theme-bg-color);
+}
+
+.hint{
+	color: var(--tg-theme-hint-color);
+}
+
+video, img {
+    height: 100%;
+    width: 100%;
+}
+
+div {
+    font-size: 14px;
+}
+
+
+body {
+	background-attachment: fixed;
+	background-color: #fff;
+    background-size: cover;
+    /* filter: grayscale(1) */
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%; /* Современные браузеры */
+}
+
+.header__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+.header {
+    font-size: 14px;
+    max-width: 1300px;
+    min-width: 240px;
+    width: 100%;
+    padding: 5px 5px 2px 5px;
+    display: flex;
+    justify-content:center;
+    flex-direction: row;
+    align-items: self-end;
+    justify-content: space-between;
+}
+
+.title {
+    padding: 0;
+    font-size: 24px;
+    font-weight: bold;
+    /* display: flex;
+	flex-direction: column;
+    justify-content:center;*/
+}
+
+.tittleSumEx {
+    padding: 0;
+    padding-bottom: 2px;
+    /* font-size: 64px; */
+    font-weight: lighter;
+    opacity: .9;
+    /* display: flex;
+	flex-direction: column;
+    justify-content:center; */
+}
+
+.mainContent {
+    /* with */
+    width: 100%;
+    max-width: 1300px;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainContent__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    /* flex-direction: column; */
+}
+
+.exercises__wrapper {
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.exercise {
+    margin: 0 0 10px 0;
+    display: flex;
+    flex-direction: row;
+    border-radius: 7px;
+    border: 0.5px solid var(--tg-theme-secondary-bg-color);
+    overflow: hidden;
+}
+
+.video_img_content{
+    height: 100px;
+    width: 100px;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.exerciseInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px 5px 10px;
+    justify-content: space-between;
+}
+
+.exerciseDetails{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.exerciseTitle {
+    font-weight: bolder;
+    max-height: 16px;
+    overflow: hidden;
+}
+
+.exerciseDesc {
+    max-height: 50px;
+    overflow: hidden;
+}
+/* 
+.exerciseDetailsLeftBlock {
+
+} */
+
+.exerciseDetailsRightBlock {
+    padding-left: 5px;
+    opacity: .5;
+}
+
+.exerciseOptions {
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-height: 30px;
+    /* height: 20px; */
+    height: 100%;
+}
+
+.buttons__wrapper {
+    /* width: max-content; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 16px;
+}
+
+.exerciseInvInfo{
+    width: max-content;
+    opacity: .5;
+}
+
+.buttons__wrapper .buttonAdd {
+    width: 80px;
+    height: 22px;
+    /* background-color: #1A83B0; */
+    background-color: #1A83B0;
+    border-radius: 3px;
+    border: none;
+    font-size: 12px;
+    color: var(--tg-theme-button-text-color);
+    transition: 0.3s;
+}
+
+.buttonAdd:active{
+    /* background: #065085; */
+    filter: brightness(85%);
+}
+
+.buttons__wrapper .buttonMini {
+    width: 22px;
+    height: 22px;
+    /* background-color: #1A83B0; */
+    background-color: #1A83B0;
+    border-radius: 3px;
+    border: none;
+    /* color: white; */
+    color: var(--tg-theme-button-text-color);
+    transition: 0.3s;
+}
+
+.buttonMini:active{
+    color: var(--tg-theme-button-text-color);
+    filter: brightness(85%);
+}
+
+.buttons__wrapper .buttonDelete {
+    /* width: 90px;
+    height: 22px; */
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: none;
+    background-color: #1a83b000;
+    /* color: var(--tg-theme-button-text-color); */
+    margin-right: 10px;
+    transition: 0.5s;
+}
+
+.trashBasket {
+    width: 100%;
+    height: 100%;
+    /* margin: 2px; */
+    /* fill: red; */
+}
+
+
+/* .trashBasket path{
+    width: 100%;
+    height: 100%;
+    fill: red;
+} */
+
+.trashBasket svg path{
+    fill: var(--tg-theme-text-color);
+  }
+
+.buttonDelete:active{
+    filter: brightness(85%);
+}
+
+.buttons__wrapper .buttonNumber {
+    /* color: #1A83B0; */
+    color: var(--tg-theme-text-color);
+    padding: 0 7px;
+}

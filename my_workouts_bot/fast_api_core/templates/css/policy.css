@@ -1,0 +1,50 @@
+body {width: 100vw;
+    min-width: 250px;
+	color: var(--tg-theme-text-color);
+	background: var(--tg-theme-bg-color);
+}
+
+form {
+	margin:0
+}
+
+* {
+    box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+.layout {
+	/* background:#fff; */
+	width: 100%;
+	margin:2px auto;
+	/* border:1px solid #ccc; */
+	padding:2px
+}
+
+h1 {
+	color:#006dad;
+	font-size:20px;
+	text-align:center;
+	margin: 10px
+}
+
+h2 {
+	opacity: .95;
+	font-size:20px;
+	text-align:center;
+	margin: 10px
+}
+
+h3 {
+	opacity: .9;
+	font-size:20px;
+	text-align:center
+}
+
+p {
+	opacity: .85;
+	padding:0 0 0.5em;
+	font:1em Arial;
+	line-height:150%
+}

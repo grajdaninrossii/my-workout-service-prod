@@ -1,0 +1,6 @@
+from .choice_train_keyboard import choice_train_keyboard
+from .go_2_test_train_keyboard import go_2_test_train_keyboard
+from .type_train_keyboard import type_train_keyboard
+from .select_feeling_keyboard import select_feeling_keyboard
+from .action_in_train_keyboard import action_in_train_keyboard, action_in_user_train_keyboards
+from .train_review_keyboard import train_review_keyboard
